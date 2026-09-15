@@ -65,7 +65,7 @@ const ticker = ["Restaurant website ordered · Lekki", "Beauty salon website del
 export default function Storefront({ views = {} }: { views?: Record<string, number> }) {
   const [active, setActive] = useState("all");
   const filtered = useMemo(() => active === "all" ? templates : templates.filter(t => t.category === active), [active]);
-  const whatsapp = "https://wa.me/2348112345678?text=Hello%20Nexa%2C%20I%27d%20like%20help%20choosing%20a%20website.";
+  const whatsapp = "https://wa.me/2348167956087?text=Hello%20Nexa%2C%20I%27d%20like%20help%20choosing%20a%20website.";
 
   return <main>
     <header className="site-nav shell">
