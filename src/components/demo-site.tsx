@@ -156,7 +156,7 @@ export default function DemoSite({ item }: { item: Template }) {
             <h2>{content.ctaTitle}</h2>
             <p>{content.ctaText}</p>
             <a className="contact-cta" href={enquiry} target="_blank" rel="noreferrer">{content.actionLabel} →</a>
-            <div className="contact-meta"><span>📍 {item.location}</span><span>📞 0811 234 5678</span></div>
+            <div className="contact-meta"><span>📍 {item.location}</span><span>📞 08167956087</span></div>
           </div>
           <div className="hours-card">
             <b>Opening hours</b>
