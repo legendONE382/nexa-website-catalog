@@ -19,7 +19,7 @@ export default function OrderForm({ item }: { item: Template }) {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Could not submit your request");
       const message = `Hello Nexa! I want to order the ${item.name}.\n\nBusiness: ${values.businessName}\nName: ${values.customerName}\nIndustry: ${values.industry}\nPackage: ${values.packageName}\nRequirements: ${values.requirements || "Let's discuss"}\nOrder reference: ${result.orderId}`;
-      const url = `https://wa.me/2348112345678?text=${encodeURIComponent(message)}`;
+      const url = `https://wa.me/2348167956087?text=${encodeURIComponent(message)}`;
       setSuccessUrl(url);
       window.open(url, "_blank", "noopener,noreferrer");
     } catch (err) { setError(err instanceof Error ? err.message : "Something went wrong"); }
