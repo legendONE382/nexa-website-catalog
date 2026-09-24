@@ -36,6 +36,7 @@ function Counter({ value }: { value: string }) {
 export default function DemoSite({ item }: { item: Template }) {
   const content = getDemoContent(item.slug);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const wa = (msg: string) => `https://wa.me/2348112345678?text=${encodeURIComponent(msg)}`;
   const enquiry = wa(`Hello ${item.brand}, I'd like to make an enquiry from your website.`);
 
@@ -55,11 +56,12 @@ export default function DemoSite({ item }: { item: Template }) {
         <Link href="/" className="buybar-back">← All designs</Link>
       </div>
 
-      <nav className={scrolled ? "demo-nav solid" : "demo-nav"}>
+      <nav className={`${scrolled ? "demo-nav solid" : "demo-nav"} ${menuOpen ? "open" : ""}`}>
         <Link href={`/demo/${item.slug}`} className="demo-brand">{item.brand}</Link>
+        <button className="demo-menu-toggle" type="button" aria-label="Toggle website navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}><i /><i /><i /></button>
         <div>
           {content.navLinks.map((link, i) => (
-            <a key={link} href={["#story", "#offerings", "#gallery", "#contact"][i]}>{link}</a>
+            <a key={link} href={["#story", "#offerings", "#gallery", "#contact"][i]} onClick={() => setMenuOpen(false)}>{link}</a>
           ))}
           <a href={enquiry} target="_blank" rel="noreferrer" className="demo-nav-cta">{content.actionLabel.split(" ")[0]} now</a>
         </div>

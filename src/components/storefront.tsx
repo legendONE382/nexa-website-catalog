@@ -64,13 +64,15 @@ const ticker = ["Restaurant website ordered · Lekki", "Beauty salon website del
 
 export default function Storefront({ views = {} }: { views?: Record<string, number> }) {
   const [active, setActive] = useState("all");
+  const [menuOpen, setMenuOpen] = useState(false);
   const filtered = useMemo(() => active === "all" ? templates : templates.filter(t => t.category === active), [active]);
   const whatsapp = "https://wa.me/2348167956087?text=Hello%20Nexa%2C%20I%27d%20like%20help%20choosing%20a%20website.";
 
   return <main>
     <header className="site-nav shell">
       <Link href="/" className="logo"><span>N</span>NEXA<small>WEBSITES</small></Link>
-      <nav><a href="#websites">Websites</a><a href="#how">How it works</a><a href="#pricing">Pricing</a></nav>
+      <button className="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}><i /><i /><i /></button>
+      <nav className={menuOpen ? "open" : ""}><a href="#websites" onClick={() => setMenuOpen(false)}>Websites</a><a href="#how" onClick={() => setMenuOpen(false)}>How it works</a><a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a></nav>
       <a className="nav-cta" href={whatsapp} target="_blank" rel="noreferrer"><WhatsAppIcon/> Chat with us</a>
     </header>
 
