@@ -44,7 +44,6 @@ export default function DemoSite({ item }: { item: Template }) {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 90);
     window.addEventListener("scroll", onScroll, { passive: true });
-    fetch("/api/views", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: item.slug }) }).catch(() => {});
     return () => window.removeEventListener("scroll", onScroll);
   }, [item.slug]);
 
@@ -172,7 +171,7 @@ export default function DemoSite({ item }: { item: Template }) {
       <footer className="demo-footer">
         <b>{item.brand}</b>
         <span>Instagram · Facebook · WhatsApp</span>
-        <span>© 2026 {item.brand}. Demo website by Nexa.</span>
+        <span>© 2026 {item.brand}. Demo website by Estech Solutions.</span>
       </footer>
 
       <a href={websiteRequestUrl(item)} target="_blank" rel="noreferrer" className="demo-float">Get this website — {formatNaira(item.price)}</a>

@@ -10,7 +10,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const item = getTemplate(slug);
-  return item ? { title: `Get the ${item.name} | Nexa Websites`, description: `Customise and order the ${item.name} from ${item.price.toLocaleString("en-NG")} naira.` } : {};
+  return item ? { title: `Get the ${item.name} | Estech Solutions`, description: `Customise and order the ${item.name} from ${item.price.toLocaleString("en-NG")} naira.` } : {};
 }
 
 export default async function OrderPage({ params }: { params: Promise<{ slug: string }> }) {

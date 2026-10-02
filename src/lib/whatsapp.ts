@@ -4,7 +4,7 @@ export const WHATSAPP_NUMBER = "2348167956087";
 
 export function websiteRequestUrl(item: Template, details?: string) {
   const message = [
-    "Hello Nexa, I am interested in this website:",
+    "Hello Estech Solutions, I am interested in this website:",
     `Website: ${item.name}`,
     `Starting price: ${formatNaira(item.price)}`,
     "",

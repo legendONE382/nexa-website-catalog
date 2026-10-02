@@ -23,7 +23,7 @@ export default function OrderForm({ item }: { item: Template }) {
   }
 
   return <main className="order-page">
-    <nav className="order-nav"><Link href="/" className="logo"><span>N</span>NEXA<small>WEBSITES</small></Link><Link href={`/demo/${item.slug}`}>← Back to live demo</Link></nav>
+    <nav className="order-nav"><Link href="/" className="logo"><span>E</span>ESTECH<small>SOLUTIONS</small></Link><Link href={`/demo/${item.slug}`}>← Back to live demo</Link></nav>
     <section className="order-wrap">
       <aside className="order-summary"><span>YOUR SELECTED WEBSITE</span><h1>{item.name}</h1><p>{item.description}</p><div className="order-preview"><img src={item.image} alt={item.name}/><b>{item.brand}</b></div><div className="order-price"><span>Website starting from</span><strong>{formatNaira(item.price)}</strong></div></aside>
       <div className="order-form">
@@ -35,7 +35,7 @@ export default function OrderForm({ item }: { item: Template }) {
           <label>EMAIL ADDRESS<input name="email" type="email" placeholder="you@business.com"/></label>
           <label>INDUSTRY *<input name="industry" required defaultValue={item.categoryLabel}/></label>
           <label>WHERE ARE YOU BASED?<input name="location" placeholder="e.g. Lekki, Lagos"/></label>
-          <label className="full">CHOOSE A PACKAGE<div className="package-options"><label><input type="radio" name="packageName" value="Starter"/><span>Starter<br/><small>₦45,000+</small></span></label><label><input type="radio" name="packageName" value="Business" defaultChecked/><span>Business<br/><small>₦70,000+</small></span></label><label><input type="radio" name="packageName" value="Premium"/><span>Premium<br/><small>₦95,000+</small></span></label></div></label>
+          <label className="full">CHOOSE A PACKAGE<div className="package-options"><label><input type="radio" name="packageName" value="Starter"/><span>Starter<br/><small>₦50,000</small></span></label><label><input type="radio" name="packageName" value="Business" defaultChecked/><span>Business<br/><small>₦75,000</small></span></label><label><input type="radio" name="packageName" value="Premium"/><span>Premium<br/><small>₦100,000</small></span></label></div></label>
           <label className="full">WHAT DO YOU NEED ON YOUR WEBSITE?<textarea name="requirements" placeholder="Tell us about your services, products, special features or timeline..."/></label>
           <button className="submit-order" disabled={loading}>{loading ? "Opening WhatsApp…" : "Send request on WhatsApp →"}</button>
           <p className="form-note">No payment required now. We’ll confirm your exact scope and price first.</p>
