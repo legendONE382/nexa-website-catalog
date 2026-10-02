@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Template } from "@/lib/catalog";
 import { formatNaira } from "@/lib/catalog";
 import { getDemoContent, px } from "@/lib/demo-content";
+import { websiteRequestUrl } from "@/lib/whatsapp";
 
 function useReveal<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
@@ -36,7 +37,8 @@ function Counter({ value }: { value: string }) {
 export default function DemoSite({ item }: { item: Template }) {
   const content = getDemoContent(item.slug);
   const [scrolled, setScrolled] = useState(false);
-  const wa = (msg: string) => `https://wa.me/2348112345678?text=${encodeURIComponent(msg)}`;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const wa = (msg: string) => websiteRequestUrl(item, msg);
   const enquiry = wa(`Hello ${item.brand}, I'd like to make an enquiry from your website.`);
 
   useEffect(() => {
@@ -51,15 +53,16 @@ export default function DemoSite({ item }: { item: Template }) {
       <div className="demo-buybar">
         <span>You’re viewing a live demo — <b>{item.name}</b></span>
         <strong className="buybar-price">From {formatNaira(item.price)}</strong>
-        <Link href={`/order/${item.slug}`}>Get this website →</Link>
+        <a href={websiteRequestUrl(item)} target="_blank" rel="noreferrer">Get this website →</a>
         <Link href="/" className="buybar-back">← All designs</Link>
       </div>
 
-      <nav className={scrolled ? "demo-nav solid" : "demo-nav"}>
+      <nav className={`${scrolled ? "demo-nav solid" : "demo-nav"} ${menuOpen ? "open" : ""}`}>
         <Link href={`/demo/${item.slug}`} className="demo-brand">{item.brand}</Link>
+        <button className="demo-menu-toggle" type="button" aria-label="Toggle website navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}><i /><i /><i /></button>
         <div>
           {content.navLinks.map((link, i) => (
-            <a key={link} href={["#story", "#offerings", "#gallery", "#contact"][i]}>{link}</a>
+            <a key={link} href={["#story", "#offerings", "#gallery", "#contact"][i]} onClick={() => setMenuOpen(false)}>{link}</a>
           ))}
           <a href={enquiry} target="_blank" rel="noreferrer" className="demo-nav-cta">{content.actionLabel.split(" ")[0]} now</a>
         </div>
@@ -172,7 +175,7 @@ export default function DemoSite({ item }: { item: Template }) {
         <span>© 2026 {item.brand}. Demo website by Nexa.</span>
       </footer>
 
-      <Link href={`/order/${item.slug}`} className="demo-float">Get this website — {formatNaira(item.price)}</Link>
+      <a href={websiteRequestUrl(item)} target="_blank" rel="noreferrer" className="demo-float">Get this website — {formatNaira(item.price)}</a>
     </main>
   );
 }
