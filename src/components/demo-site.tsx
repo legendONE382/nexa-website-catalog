@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Template } from "@/lib/catalog";
 import { formatNaira } from "@/lib/catalog";
 import { getDemoContent, px } from "@/lib/demo-content";
+import { websiteRequestUrl } from "@/lib/whatsapp";
 
 function useReveal<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
@@ -37,7 +38,7 @@ export default function DemoSite({ item }: { item: Template }) {
   const content = getDemoContent(item.slug);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const wa = (msg: string) => `https://wa.me/2348112345678?text=${encodeURIComponent(msg)}`;
+  const wa = (msg: string) => websiteRequestUrl(item, msg);
   const enquiry = wa(`Hello ${item.brand}, I'd like to make an enquiry from your website.`);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function DemoSite({ item }: { item: Template }) {
       <div className="demo-buybar">
         <span>You’re viewing a live demo — <b>{item.name}</b></span>
         <strong className="buybar-price">From {formatNaira(item.price)}</strong>
-        <Link href={`/order/${item.slug}`}>Get this website →</Link>
+        <a href={websiteRequestUrl(item)} target="_blank" rel="noreferrer">Get this website →</a>
         <Link href="/" className="buybar-back">← All designs</Link>
       </div>
 
@@ -174,7 +175,7 @@ export default function DemoSite({ item }: { item: Template }) {
         <span>© 2026 {item.brand}. Demo website by Nexa.</span>
       </footer>
 
-      <Link href={`/order/${item.slug}`} className="demo-float">Get this website — {formatNaira(item.price)}</Link>
+      <a href={websiteRequestUrl(item)} target="_blank" rel="noreferrer" className="demo-float">Get this website — {formatNaira(item.price)}</a>
     </main>
   );
 }

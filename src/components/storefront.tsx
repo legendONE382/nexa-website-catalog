@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { categories, formatNaira, templates } from "@/lib/catalog";
+import { WHATSAPP_NUMBER, websiteRequestUrl } from "@/lib/whatsapp";
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? "↗" : "→"}</span>;
@@ -42,9 +43,9 @@ function BrowserPreview() {
 }
 
 const packages = [
-  { name: "Starter", price: "₦50,000+", text: "The fast, polished start your business needs.", items: ["Your chosen ready-made design", "Logo, colours & content setup", "WhatsApp and contact integration", "Mobile responsive website"] },
-  { name: "Business", price: "₦75,000+", text: "Everything required to confidently grow online.", featured: true, items: ["Everything in Starter", "Domain and hosting setup", "Up to 7 tailored pages", "Google Maps & basic SEO", "30 days support"] },
-  { name: "Premium", price: "₦100,000+", text: "More control for ambitious, growing brands.", items: ["Everything in Business", "Advanced customisation", "Booking, payments or catalog", "Priority delivery & support", "Analytics setup"] },
+  { name: "Starter", price: "₦45,000+", text: "The fast, polished start your business needs.", items: ["Your chosen ready-made design", "Logo, colours & content setup", "WhatsApp and contact integration", "Mobile responsive website"] },
+  { name: "Business", price: "₦70,000+", text: "Everything required to confidently grow online.", featured: true, items: ["Everything in Starter", "Domain and hosting setup", "Up to 7 tailored pages", "Google Maps & basic SEO", "30 days support"] },
+  { name: "Premium", price: "₦95,000+", text: "More control for ambitious, growing brands.", items: ["Everything in Business", "Advanced customisation", "Booking, payments or catalog", "Priority delivery & support", "Analytics setup"] },
 ];
 
 const reviews = [
@@ -66,7 +67,7 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
   const [active, setActive] = useState("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const filtered = useMemo(() => active === "all" ? templates : templates.filter(t => t.category === active), [active]);
-  const whatsapp = "https://wa.me/2348167956087?text=Hello%20Nexa%2C%20I%27d%20like%20help%20choosing%20a%20website.";
+  const whatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Nexa%2C%20I%27d%20like%20help%20choosing%20a%20website.`;
 
   return <main>
     <header className="site-nav shell">
@@ -87,7 +88,7 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
       <BrowserPreview/>
     </section>
 
-    <div className="trust-strip"><span>Built for Nigerian businesses</span><b>⚡ Launch in 5–10 days</b><b>◆ Mobile-first design</b><b>● WhatsApp ready</b><b>✓ Secure & reliable</b></div>
+    <div className="trust-strip"><span>Built for Nigerian businesses</span><b>⚡ Clear scope before payment</b><b>◆ Mobile-first design</b><b>● Direct WhatsApp support</b><b>✓ Launch in 5–10 days</b></div>
 
     <section className="catalog-section shell" id="websites">
       <div className="section-head"><div><span className="section-kicker">THE WEBSITE STORE</span><h2>Find the one that feels<br/>like <em>your business.</em></h2></div><p>Every design is complete, responsive and ready to be customised with your own brand, content and business details.</p></div>
@@ -105,10 +106,11 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
           <div className="product-content">
             <div className="product-title"><div><h3>{item.name}</h3><p>{item.description}</p></div><span><small>FROM</small>{formatNaira(item.price)}</span></div>
             <div className="feature-list">{item.features.map(f => <span key={f}>✓ {f}</span>)}</div>
-            <div className="card-actions"><Link className="demo-btn" href={`/demo/${item.slug}`}>View live demo <Arrow diagonal/></Link><Link className="get-btn" href={`/order/${item.slug}`}>Get this website <Arrow/></Link></div>
+            <div className="card-actions"><Link className="demo-btn" href={`/demo/${item.slug}`}>View live demo <Arrow diagonal/></Link><a className="get-btn" href={websiteRequestUrl(item)} target="_blank" rel="noreferrer">Get this website <Arrow/></a></div>
           </div>
         </article>)}
       </div>
+      <div className="catalog-assurance" aria-label="Why choose Nexa Websites"><span>✓ Clear, fixed starting prices</span><span>✓ Speak directly with the build team</span><span>✓ Review your website before launch</span></div>
     </section>
 
     <section className="process" id="how"><div className="shell">
