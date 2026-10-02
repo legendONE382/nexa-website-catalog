@@ -10,7 +10,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const item = getTemplate(slug);
-  return item ? { title: `${item.brand} — Live Website Demo | Nexa`, description: item.description } : {};
+  return item ? { title: `${item.brand} — Live Website Demo | Estech Solutions`, description: item.description } : {};
 }
 
 export default async function DemoPage({ params }: { params: Promise<{ slug: string }> }) {

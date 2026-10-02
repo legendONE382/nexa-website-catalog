@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { categories, formatNaira, templates } from "@/lib/catalog";
+import { categories, templates } from "@/lib/catalog";
+import { WHATSAPP_NUMBER, websiteRequestUrl } from "@/lib/whatsapp";
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? "↗" : "→"}</span>;
@@ -42,9 +43,9 @@ function BrowserPreview() {
 }
 
 const packages = [
-  { name: "Starter", price: "₦50,000+", text: "The fast, polished start your business needs.", items: ["Your chosen ready-made design", "Logo, colours & content setup", "WhatsApp and contact integration", "Mobile responsive website"] },
-  { name: "Business", price: "₦75,000+", text: "Everything required to confidently grow online.", featured: true, items: ["Everything in Starter", "Domain and hosting setup", "Up to 7 tailored pages", "Google Maps & basic SEO", "30 days support"] },
-  { name: "Premium", price: "₦100,000+", text: "More control for ambitious, growing brands.", items: ["Everything in Business", "Advanced customisation", "Booking, payments or catalog", "Priority delivery & support", "Analytics setup"] },
+  { name: "Starter", price: "₦50,000", text: "The fast, polished start your business needs.", items: ["Your chosen ready-made design", "Logo, colours & content setup", "WhatsApp and contact integration", "Mobile responsive website"] },
+  { name: "Business", price: "₦75,000", text: "Everything required to confidently grow online.", featured: true, items: ["Everything in Starter", "Domain and hosting setup", "Up to 7 tailored pages", "Google Maps & basic SEO", "30 days support"] },
+  { name: "Premium", price: "₦100,000", text: "More control for ambitious, growing brands.", items: ["Everything in Business", "Advanced customisation", "Booking, payments or catalog", "Priority delivery & support", "Analytics setup"] },
 ];
 
 const reviews = [
@@ -53,24 +54,26 @@ const reviews = [
   { quote: "Seeing the working demo before paying removed all my doubt. Exactly what I got, no surprises.", name: "Emeka O.", role: "MD, Swiftline Haulage · Onitsha", avatar: "https://images.pexels.com/photos/17060523/pexels-photo-17060523.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=200&h=200" },
 ];
 
-const results = [
-  { value: "120+", label: "Businesses launched" },
-  { value: "5–10", label: "Days to go live" },
-  { value: "4.9/5", label: "Client rating" },
-  { value: "36", label: "States served" },
+const benefits = [
+  { value: "Ready-made", label: "Professional designs" },
+  { value: "Mobile-first", label: "Built for every screen" },
+  { value: "WhatsApp-ready", label: "Enquiries made simple" },
+  { value: "₦50,000–₦100,000", label: "Clear package pricing" },
 ];
 
 const ticker = ["Restaurant website ordered · Lekki", "Beauty salon website delivered · Abuja", "Real estate website ordered · Ikoyi", "Logistics website delivered · Onitsha", "Fashion store ordered · Port Harcourt", "Hotel website delivered · Calabar"];
 
-export default function Storefront({ views = {} }: { views?: Record<string, number> }) {
+export default function Storefront() {
   const [active, setActive] = useState("all");
+  const [menuOpen, setMenuOpen] = useState(false);
   const filtered = useMemo(() => active === "all" ? templates : templates.filter(t => t.category === active), [active]);
-  const whatsapp = "https://wa.me/2348167956087?text=Hello%20Nexa%2C%20I%27d%20like%20help%20choosing%20a%20website.";
+  const whatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Estech%20Solutions%2C%20I%27d%20like%20help%20choosing%20a%20website.`;
 
   return <main>
     <header className="site-nav shell">
-      <Link href="/" className="logo"><span>N</span>NEXA<small>WEBSITES</small></Link>
-      <nav><a href="#websites">Websites</a><a href="#how">How it works</a><a href="#pricing">Pricing</a></nav>
+      <Link href="/" className="logo"><span>E</span>ESTECH<small>SOLUTIONS</small></Link>
+      <button className="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}><i /><i /><i /></button>
+      <nav className={menuOpen ? "open" : ""}><a href="#websites" onClick={() => setMenuOpen(false)}>Websites</a><a href="#how" onClick={() => setMenuOpen(false)}>How it works</a><a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a></nav>
       <a className="nav-cta" href={whatsapp} target="_blank" rel="noreferrer"><WhatsAppIcon/> Chat with us</a>
     </header>
 
@@ -80,12 +83,12 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
         <h1>See your business<br/><em>online</em> before<br/>you buy it.</h1>
         <p>Choose a professionally designed website, make it yours, and launch—without the agency headache.</p>
         <div className="hero-actions"><a className="button primary" href="#websites">Browse websites <Arrow/></a><a className="text-link" href="#how"><span>▶</span> See how it works</a></div>
-        <div className="proof"><div className="avatar-stack"><span>AO</span><span>NK</span><span>TI</span><span>+</span></div><div><b>Trusted by 120+ Nigerian businesses</b><small><i>★★★★★</i> 4.9 average rating</small></div></div>
+        <div className="hero-positioning">PROFESSIONAL WEBSITES FOR NIGERIAN BUSINESSES</div>
       </div>
       <BrowserPreview/>
     </section>
 
-    <div className="trust-strip"><span>Built for Nigerian businesses</span><b>⚡ Launch in 5–10 days</b><b>◆ Mobile-first design</b><b>● WhatsApp ready</b><b>✓ Secure & reliable</b></div>
+    <div className="trust-strip"><span>Built for Nigerian businesses</span><b>⚡ Clear scope before payment</b><b>◆ Mobile-first design</b><b>● Direct WhatsApp support</b><b>✓ Launch in 5–10 days</b></div>
 
     <section className="catalog-section shell" id="websites">
       <div className="section-head"><div><span className="section-kicker">THE WEBSITE STORE</span><h2>Find the one that feels<br/>like <em>your business.</em></h2></div><p>Every design is complete, responsive and ready to be customised with your own brand, content and business details.</p></div>
@@ -97,16 +100,16 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
           <Link href={`/demo/${item.slug}`} className="product-media" aria-label={`View ${item.name} demo`}>
             {item.video ? <video muted loop playsInline poster={item.image} onMouseEnter={e => e.currentTarget.play()} onMouseLeave={e => {e.currentTarget.pause(); e.currentTarget.currentTime = 0;}}><source src={item.video}/></video> : <img src={item.image} alt={`${item.name} preview`}/>} 
             <span className="industry-tag">{item.categoryLabel}</span><span className="live-tag"><i/> LIVE DEMO</span>
-            <span className="views-tag">👁 {(views[item.slug] ?? 0).toLocaleString("en-NG")} views</span>
             <div className="website-overlay"><b>{item.brand}</b><small>{item.tagline}</small></div>
           </Link>
           <div className="product-content">
-            <div className="product-title"><div><h3>{item.name}</h3><p>{item.description}</p></div><span><small>FROM</small>{formatNaira(item.price)}</span></div>
+            <div className="product-title"><div><h3>{item.name}</h3><p>{item.description}</p></div></div>
             <div className="feature-list">{item.features.map(f => <span key={f}>✓ {f}</span>)}</div>
-            <div className="card-actions"><Link className="demo-btn" href={`/demo/${item.slug}`}>View live demo <Arrow diagonal/></Link><Link className="get-btn" href={`/order/${item.slug}`}>Get this website <Arrow/></Link></div>
+            <div className="card-actions"><Link className="demo-btn" href={`/demo/${item.slug}`}>View live demo <Arrow diagonal/></Link><a className="get-btn" href={websiteRequestUrl(item)} target="_blank" rel="noreferrer">Get this website <Arrow/></a></div>
           </div>
         </article>)}
       </div>
+      <div className="catalog-assurance" aria-label="Why choose Estech Solutions"><span>✓ Clear, fixed starting prices</span><span>✓ Speak directly with the build team</span><span>✓ Review your website before launch</span></div>
     </section>
 
     <section className="process" id="how"><div className="shell">
@@ -114,7 +117,7 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
       <div className="steps"><div><span>01</span><i>⌁</i><h3>Pick your website</h3><p>Explore real, working demos and choose the design that fits your business best.</p></div><div><span>02</span><i>✦</i><h3>Make it yours</h3><p>Send your logo, colours, photos and content. We customise every detail around your brand.</p></div><div><span>03</span><i>↗</i><h3>Launch & grow</h3><p>Review your website, approve it, and go live—typically in just 5 to 10 working days.</p></div></div>
     </div></section>
 
-    <section className="results shell"><div className="results-band">{results.map(stat => <div key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}</div></section>
+    <section className="results shell" aria-label="Website benefits"><div className="results-band">{benefits.map(benefit => <div key={benefit.label}><strong>{benefit.value}</strong><span>{benefit.label}</span></div>)}</div></section>
 
     <section className="reviews shell">
       <div className="section-head"><div><span className="section-kicker">REAL BUSINESSES, REAL RESULTS</span><h2>They picked a design.<br/>Then <em>everything changed.</em></h2></div><p>Nigerian business owners who stopped looking unprofessional online—and started winning the customers they deserve.</p></div>
@@ -130,7 +133,7 @@ export default function Storefront({ views = {} }: { views?: Record<string, numb
 
     <section className="cta-shell shell"><div className="final-cta"><div><span>YOUR BUSINESS DESERVES BETTER</span><h2>Ready to look<br/><em>the part?</em></h2><p>Let’s give your business a website customers trust—and remember.</p><div><a className="button lime" href="#websites">Browse all websites <Arrow/></a><a href={whatsapp} target="_blank" rel="noreferrer" className="cta-chat"><WhatsAppIcon/> Chat on WhatsApp</a></div></div><div className="cta-art"><div className="mini-browser"><div>● ● ●</div><img src={templates[4].image} alt="Premium beauty website preview"/><b>MUSE<small>BEAUTY, REFINED.</small></b></div><span className="float-badge">✓<b>Ready in<br/>5–10 days</b></span></div></div></section>
 
-    <footer><div className="shell footer-main"><div><Link href="/" className="logo inverted"><span>N</span>NEXA<small>WEBSITES</small></Link><p>Professional websites for Nigerian<br/>businesses—without the agency headache.</p></div><div><b>Explore</b><a href="#websites">Website catalog</a><a href="#how">How it works</a><a href="#pricing">Pricing</a></div><div><b>Popular industries</b><a href="#websites">Restaurants</a><a href="#websites">Real estate</a><a href="#websites">Fashion & beauty</a></div><div><b>Talk to us</b><a href={whatsapp}>WhatsApp</a><a href="mailto:hello@nexa.ng">hello@nexa.ng</a><span>Lagos, Nigeria 🇳🇬</span></div></div><div className="shell footer-bottom"><span>© 2026 Nexa Websites. All rights reserved.</span><span>Built for bold Nigerian businesses.</span></div></footer>
+    <footer><div className="shell footer-main"><div><Link href="/" className="logo inverted"><span>E</span>ESTECH<small>SOLUTIONS</small></Link><p>Professional websites for Nigerian<br/>businesses—without the agency headache.</p></div><div><b>Explore</b><a href="#websites">Website catalog</a><a href="#how">How it works</a><a href="#pricing">Pricing</a></div><div><b>Popular industries</b><a href="#websites">Restaurants</a><a href="#websites">Real estate</a><a href="#websites">Fashion & beauty</a></div><div><b>Talk to us</b><a href={whatsapp}>WhatsApp</a><a href="mailto:contactestechsolutions@gmai.com">contactestechsolutions@gmai.com</a><span>Lagos, Nigeria 🇳🇬</span></div></div><div className="shell footer-bottom"><span>© 2026 Estech Solutions. All rights reserved.</span><span>Built for bold Nigerian businesses.</span></div></footer>
     <a className="floating-wa" href={whatsapp} target="_blank" rel="noreferrer" aria-label="Chat with us on WhatsApp"><WhatsAppIcon/><span>Let’s talk</span></a>
   </main>;
 }

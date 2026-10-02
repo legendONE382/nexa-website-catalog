@@ -5,6 +5,7 @@ import { templates } from "@/lib/catalog";
 // Baseline so a brand-new deployment still shows credible catalog activity.
 const BASELINE: Record<string, number> = {
   "orun-restaurant": 1840,
+  "elan-events": 1095,
   "adara-fashion": 1520,
   "haven-realty": 1275,
   "swiftline-logistics": 980,
